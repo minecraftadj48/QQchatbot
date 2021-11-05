@@ -134,3 +134,4 @@ config.yml
 device.json
 cqhttp.exe
 session.token
+/.env.atri
