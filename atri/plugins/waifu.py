@@ -4,6 +4,8 @@ from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 import random
 
+
+#注册一个事件响应器，事件类型为command，
 waifu=on_command("获取老婆",priority=1)
 
 @waifu.handle()
