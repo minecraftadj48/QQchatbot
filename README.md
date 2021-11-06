@@ -8,5 +8,7 @@
 **相关链接**  
 [go-cqhttp文档](https://docs.go-cqhttp.org/)  
 [nonebot2文档](https://v2.nonebot.dev/)
-   
+
+**网站wiki**  
+[QQchabot-manager](https://亚托莉.com)
 
