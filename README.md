@@ -14,12 +14,13 @@
 
 **一.词库格式**  
 在bot初始化时，bot从/atri/Dictionary/index.json文件中读取词库文件的目录，先读取的词库文件**优先级更高**，不会被后读取的词库覆盖。index.json文件如下所示：  
-    
+```json
     {
         "index":["atri\\Dictionary\\Genshin.json","atri\\Dictionary\\Base.json"]
     }
+```
 词库文件也为json格式，示例如下：
-
+```json
     {
         "刻晴今天吃什么":
             {
@@ -38,4 +39,9 @@
                 "need_attitude": 0
             }
     }
-其中is_keyword意为关键字触发，即句子中只要        
+```
++ `is_keyword`：关键字触发，当`is_keyword`为`true`时只要句子中存在相同的关键字就会触发回复
++ `need_at`：@触发，只有当@机器人才能触发机器人的相应动作
++ `multi_reply`：随机回复，当回复的词条多于1时为true，机器人会从其中随机挑选一条进行回复。
++ `need_attitude`：好感度要求，只有当好感度等级>=对应的值时才会触发词条
+
