@@ -2,20 +2,22 @@ from nonebot import on_message
 from nonebot.rule import to_me
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event
+from load_dictionary import dictionary
 import random
 # 引用字典
 import sys
 sys.path.append("../../")
-from load_dictionary import  dictionary
+
 
 # 注册一个事件响应器，事件类型为command，
-reply=on_message(priority=5)
+reply = on_message(priority=5)
+
 
 @reply.handle()
 async def normal_reply(bot: Bot, event: Event, state: T_State):
     msg = event.raw_message
     if msg in dictionary:
-        if event.message_type=='group':
+        if event.message_type == 'group':
             groupid = event.group_id
             # 单条回复类
             if not dictionary[msg]["multi_reply"]:
@@ -29,7 +31,3 @@ async def normal_reply(bot: Bot, event: Event, state: T_State):
                                               "message": "{}".format(sndmsg)})
         else:
             return
-
-
-
-
