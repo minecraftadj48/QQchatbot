@@ -1,7 +1,7 @@
 {
   "刻晴今天吃什么":
   {
-    "is_keyword":true,
+    "is_keyword": false
     "need_at": false,
     "multi_reply": false,
     "reply": ["剑光如我，斩尽牛杂"],
@@ -9,7 +9,7 @@
   },
   "可莉":
   {
-    "is_keyword":false,
+    "is_keyword": false,
     "need_at": false,
     "multi_reply": true,
     "reply": ["哒哒哒","啦啦啦","蹦蹦炸弹","轰轰火花"],

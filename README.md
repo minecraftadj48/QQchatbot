@@ -12,3 +12,30 @@
 **网站wiki**  
 [QQchabot-manager](https://亚托莉.com)
 
+**一.词库格式**  
+在bot初始化时，bot从/atri/Dictionary/index.json文件中读取词库文件的目录，先读取的词库文件**优先级更高**，不会被后读取的词库覆盖。index.json文件如下所示：  
+    
+    {
+        "index":["atri\\Dictionary\\Genshin.json","atri\\Dictionary\\Base.json"]
+    }
+词库文件也为json格式，示例如下：
+
+    {
+        "刻晴今天吃什么":
+            {
+                "is_keyword":false,
+                "need_at": false,
+                "multi_reply": false,
+                "reply": ["剑光如我，斩尽牛杂"],
+                "need_attitude": 0
+            },
+        "可莉":
+            {
+                "is_keyword":false,
+                "need_at": false,
+                "multi_reply": true,
+                "reply": ["哒哒哒","啦啦啦","蹦蹦炸弹","轰轰火花"],
+                "need_attitude": 0
+            }
+    }
+其中is_keyword意为关键字触发，即句子中只要        
