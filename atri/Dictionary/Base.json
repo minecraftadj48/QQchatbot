@@ -1,10 +1,2 @@
 {
-  "test":
-  {
-    "is_keyword": false,
-    "need_at": false,
-    "multi_reply": false,
-    "reply": ["剑光如我，斩尽牛杂"],
-    "need_attitude": 0
-  }
 }
