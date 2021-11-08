@@ -5,7 +5,7 @@ import os
 #
 import nonebot
 from nonebot.adapters.cqhttp import Bot as CQHTTPBot
-
+from load_dictionary import dictionary_initial
 # Custom your logger
 # 
 # from nonebot.log import logger, default_format
@@ -17,16 +17,18 @@ from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 
 # You can pass some keyword args config to init function
 
-#初始化nonebot
+# 初始化nonebot
 nonebot.init()
 app = nonebot.get_asgi()
-#以创建一个新进程运行cqhttp，与之对应的，os.system("cqhttp.exe")会阻塞至程序运行结束
-os.popen("cqhttp.exe")
-#连接驱动
+# 以创建一个新进程运行cqhttp，与之对应的，os.system("cqhttp.exe")会阻塞至程序运行结束
+# os.popen("cqhttp.exe")
+# 连接驱动
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", CQHTTPBot)
-#加载插件
+# 加载插件
 nonebot.load_builtin_plugins()
+
+dictionary_initial()
 # Please DO NOT modify this file unless you know what you are doing!
 # As an alternative, you should use command `nb` or modify `pyproject.toml` to load plugins
 nonebot.load_from_toml("pyproject.toml")
