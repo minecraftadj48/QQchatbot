@@ -135,3 +135,4 @@ device.json
 cqhttp.exe
 session.token
 /.env.atri
+/atri/plugins/nonebot_plugin_atri/

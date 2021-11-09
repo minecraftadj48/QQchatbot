@@ -5,7 +5,8 @@
     "need_at": false,
     "multi_reply": false,
     "reply": ["剑光如我，斩尽牛杂"],
-    "need_attitude": 0
+    "need_attitude": 0,
+    "need_permission": 0
   },
   "可莉":
   {
@@ -13,6 +14,7 @@
     "need_at": false,
     "multi_reply": true,
     "reply": ["哒哒哒","啦啦啦","蹦蹦炸弹","轰轰火花"],
-    "need_attitude": 0
+    "need_attitude": 0,
+    "need_permission": 0
   }
 }
