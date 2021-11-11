@@ -4,7 +4,7 @@ from nonebot.adapters import Bot ,Event
 from nonebot import on_command
 
 
-matcher=on_command("测试",permission=SUPERUSER)
+matcher=on_command("测试",permission=SUPERUSER,priority=10)
 
 @matcher.handle()
 async def _(bot: Bot):
