@@ -14,10 +14,10 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 # 群事件处理
 group_handler = on_notice(priority=15)
 # 指令处理
-command_handler = on_command("用户刷新", priority=10)
+command_handler = on_command("数据库刷新", priority=10)
 
 
-# 定期更新数据库
+# 定期更新数据库 更新群列表及用户列表
 # 为定期执行的任务，执行时间为传入的hour minute参数
 @scheduler.scheduled_job("cron", hour="00", minute="00")
 async def update_usersdata():
@@ -27,14 +27,28 @@ async def update_usersdata():
     connect = sqlite3.connect(".\\Bot_data\\SQLite\\Users.db")
     # 创建游标
     cursor = connect.cursor()
-
-    # 群组用户更新
+    # 群组用户更新 群更新
     # 遍历群组
     groups = await bot.call_api("get_group_list")
     # groups为群组列表
     for group in groups:
         # group_id 群号
         group_id = group["group_id"]
+        # group_name 群名
+        group_name = group["group_name"]
+        group_name_tuple = (group_name,)
+        # 群更新
+        # 查找数据库中是否存在该群
+        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_name_tuple)
+        for c in cursor:
+            if c[0] == 0:
+                insert_value = (group_id, group_name)
+                cursor.execute('''
+                                INSERT INTO
+                                GROUPS(GROUPID,PERMISSION,GROUPNAME)
+                                VALUES (?,1,?)''', insert_value)
+
+        # 群用户更新
         # group_member 群成员列表
         group_members = await bot.call_api("get_group_member_list", **{"group_id": group_id})
         for group_member in group_members:
@@ -133,13 +147,28 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
             for c in cursor:
                 if not c[0] == 0:
                     return
-    # 群组用户更新
+    # 群组用户更新 群更新
     # 遍历群组
     groups = await bot.call_api("get_group_list")
     # groups为群组列表
     for group in groups:
         # group_id 群号
         group_id = group["group_id"]
+        # group_name 群名
+        group_name = group["group_name"]
+        group_name_tuple = (group_name,)
+        # 群更新
+        # 查找数据库中是否存在该群
+        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_name_tuple)
+        for c in cursor:
+            if c[0] == 0:
+                insert_value = (group_id, group_name)
+                cursor.execute('''
+                                INSERT INTO
+                                GROUPS(GROUPID,PERMISSION,GROUPNAME)
+                                VALUES (?,1,?)''', insert_value)
+
+        # 群用户更新
         # group_member 群成员列表
         group_members = await bot.call_api("get_group_member_list", **{"group_id": group_id})
         for group_member in group_members:
@@ -156,10 +185,10 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
                     # 避免SQL注入攻击，使用？来代替字符串替换
                     insert_value = (member_id, member_name)
                     connect.execute('''
-                                       INSERT INTO 
-                                       USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
-                                       VALUES(2,0,0,?,?);
-                                       ''', insert_value)
+                                    INSERT INTO 
+                                    USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                    VALUES(2,0,0,?,?);
+                                    ''', insert_value)
 
     # 好友用户更新 api返回json数组 详见go—cqhttp的文档
     friends = await bot.call_api("get_friend_list")
@@ -175,10 +204,10 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
                 # 避免SQL注入攻击，使用？来代替字符串替换
                 insert_value = (friend_id, friend_name)
                 connect.execute('''
-                                   INSERT INTO 
-                                   USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
-                                   VALUES(2,0,0,?,?);
-                                   ''', insert_value)
+                                INSERT INTO 
+                                USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                VALUES(2,0,0,?,?);
+                                ''', insert_value)
     # 数据库保存更新
     cursor.close()
     connect.commit()
