@@ -10,7 +10,7 @@ import sys
 sys.path.append("../../")
 
 
-# 注册一个事件响应器，事件类型为command，
+# 注册一个事件响应器，事件类型为message.
 reply = on_message(priority=20)
 
 
