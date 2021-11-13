@@ -4,6 +4,7 @@ from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event
 from load_dictionary import dictionary
 import random
+import asyncio
 # 引用字典
 import sys
 sys.path.append("../../")

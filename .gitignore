@@ -137,3 +137,5 @@ session.token
 /.env.atri
 /atri/plugins/nonebot_plugin_atri/
 /Bot_data/SQLite/
+/atri/plugins/nonebot_plugin_apscheduler/
+/atri/plugins/nonebot_plugin_gamedraw/
