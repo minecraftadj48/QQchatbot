@@ -2,7 +2,7 @@ import json
 
 dictionary = {}
 
-indexname = "atri\\Dictionary\\index.json"
+indexname = ".\\Bot_data\\Dictionary\\index.json"
 
 
 def dictionary_initial():
