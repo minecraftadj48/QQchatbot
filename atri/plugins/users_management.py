@@ -45,14 +45,14 @@ async def update_usersdata():
             # member_name 群成员QQ名
             member_name = group_member["nickname"]
             # 查找数据库中是否存在该成员
-            cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", member_id_tuple)
+            cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", member_id_tuple)
             for c in cursor:
                 if c[0] == 0:
                     # 避免SQL注入攻击，使用？来代替字符串替换
                     insert_value = (member_id, member_name)
                     connect.execute('''
                                     INSERT INTO 
-                                    BASE(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                    USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
                                     VALUES(2,0,0,?,?);
                                     ''', insert_value)
 
@@ -64,14 +64,14 @@ async def update_usersdata():
         # 好友名
         friend_name = friend["nickname"]
         # 查找数据库中是否存在该成员
-        cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", member_id_tuple)
+        cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", member_id_tuple)
         for c in cursor:
             if c[0] == 0:
                 # 避免SQL注入攻击，使用？来代替字符串替换
                 insert_value = (friend_id, friend_name)
                 connect.execute('''
                                 INSERT INTO 
-                                BASE(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
                                 VALUES(2,0,0,?,?);
                                 ''', insert_value)
     # 数据库保存更新
@@ -97,14 +97,14 @@ async def add_member_to_user_database(bot: Bot, event: Event, state: T_State):
         # 创建游标
         cursor = connect.cursor()
         # 判断是否已在数据库内
-        cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", member_id_tuple)
+        cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", member_id_tuple)
         for c in cursor:
             if c[0] == 0:
                 # 将用户添加入数据库
                 insert_value = (member_id, member_name)
                 connect.execute('''
                                 INSERT INTO 
-                                BASE(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
                                 VALUES(2,0,0,?,?);
                                 ''', insert_value)
         cursor.close()
@@ -122,14 +122,14 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
     # 权限审查
     caller = event.user_id
     caller = (caller,)
-    cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", caller)
+    cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", caller)
     # 检查是否在数据库中
     for c in cursor:
         if c[0] == 0:
             return
         else:
             # 检查是否满足权限
-            cursor.execute("SELECT PERMISSION FROM BASE WHERE QID=(?)", caller)
+            cursor.execute("SELECT PERMISSION FROM USERS WHERE QID=(?)", caller)
             for c in cursor:
                 if not c[0] == 0:
                     return
@@ -150,14 +150,14 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
             # member_name 群成员QQ名
             member_name = group_member["nickname"]
             # 查找数据库中是否存在该成员
-            cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", member_id_tuple)
+            cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", member_id_tuple)
             for c in cursor:
                 if c[0] == 0:
                     # 避免SQL注入攻击，使用？来代替字符串替换
                     insert_value = (member_id, member_name)
                     connect.execute('''
                                        INSERT INTO 
-                                       BASE(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                       USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
                                        VALUES(2,0,0,?,?);
                                        ''', insert_value)
 
@@ -169,14 +169,14 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
         # 好友名
         friend_name = friend["nickname"]
         # 查找数据库中是否存在该成员
-        cursor.execute("SELECT COUNT(*) FROM BASE WHERE QID=(?);", member_id_tuple)
+        cursor.execute("SELECT COUNT(*) FROM USERS WHERE QID=(?);", member_id_tuple)
         for c in cursor:
             if c[0] == 0:
                 # 避免SQL注入攻击，使用？来代替字符串替换
                 insert_value = (friend_id, friend_name)
                 connect.execute('''
                                    INSERT INTO 
-                                   BASE(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
+                                   USERS(PERMISSION,ATTITUDE,GOLD,QID,QQNAME) 
                                    VALUES(2,0,0,?,?);
                                    ''', insert_value)
     # 数据库保存更新
