@@ -54,6 +54,9 @@ async def netdisk_out(bot: Bot, event: Event, state: T_State):
             if not len(list(cursor)):
                 msg = "没有查询到相关资源！"
                 await bot.call_api("send_group_msg", **{"group_id": group_id, "message": msg})
+            cursor.execute('''
+                                        SELECT * FROM BAIDU
+                                        WHERE ID=(?)''', id_tuple)
             for info in cursor:
                 msg = ""
                 msg = msg + str(info[0]) + ".  "
