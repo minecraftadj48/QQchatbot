@@ -135,7 +135,10 @@ device.json
 cqhttp.exe
 session.token
 /.env.atri
+/Bot_data/
 /atri/plugins/nonebot_plugin_atri/
 /Bot_data/SQLite/
 /atri/plugins/nonebot_plugin_apscheduler/
 /atri/plugins/nonebot_plugin_gamedraw/
+
+/Bot_data/BaiduCloudDisk/
