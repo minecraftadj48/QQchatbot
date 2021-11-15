@@ -11,7 +11,7 @@ sys.path.append("../../")
 
 
 # 注册一个事件响应器，事件类型为message.
-reply = on_message(priority=20)
+reply = on_message(priority = 500, block=False)
 
 
 @reply.handle()
