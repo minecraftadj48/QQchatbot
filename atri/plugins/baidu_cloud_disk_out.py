@@ -8,7 +8,7 @@ from nonebot import on_notice
 from nonebot.rule import to_me
 from nonebot.typing import T_State
 from nonebot.adapters.cqhttp import Bot, Event
-
+from nonebot.exception import StopPropagation
 
 
 # 指令处理
@@ -116,9 +116,10 @@ async def netdisk_out(bot: Bot, event: Event, state: T_State):
 @search_handler.handle()
 async def netdisk_search_name(bot: Bot, event: Event, state: T_State):
     if event.message_type == "group":
-        print(event.message)
+        message=str(event.message)
         group_id = event.group_id
-        state["NAME"] = event.message
+        if not message == "":
+            state["NAME"] = message
 
 @search_handler.got("NAME",prompt="请输入要检索的资源名！")
 async def netdisk_searching(bot: Bot, event: Event, state: T_State):
@@ -128,7 +129,6 @@ async def netdisk_searching(bot: Bot, event: Event, state: T_State):
         # 创建游标
         cursor = connect.cursor()
         NAME = state["NAME"]
-        NAME = str(NAME)
         NAME = ('%'+NAME+'%',)
         #资源检索
         cursor.execute('''
