@@ -36,17 +36,18 @@ async def update_usersdata():
         group_id = group["group_id"]
         # group_name 群名
         group_name = group["group_name"]
-        group_name_tuple = (group_name,)
+        group_id_tuple = (group_name,)
         # 群更新
         # 查找数据库中是否存在该群
-        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_name_tuple)
+        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_id_tuple)
         for c in cursor:
             if c[0] == 0:
                 insert_value = (group_id, group_name)
                 cursor.execute('''
                                 INSERT INTO
                                 GROUPS(GROUPID,PERMISSION,GROUPNAME)
-                                VALUES (?,1,?)''', insert_value)
+                                VALUES (?,1,?)
+                                ''', insert_value)
 
         # 群用户更新
         # group_member 群成员列表
@@ -156,17 +157,18 @@ async def refresh_user_database(bot: Bot, event: Event, state: T_State):
         group_id = group["group_id"]
         # group_name 群名
         group_name = group["group_name"]
-        group_name_tuple = (group_name,)
+        group_id_tuple = (group_id,)
         # 群更新
         # 查找数据库中是否存在该群
-        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_name_tuple)
+        cursor.execute("SELECT COUNT(*) FROM GROUPS WHERE GROUPID=(?)",group_id_tuple)
         for c in cursor:
             if c[0] == 0:
                 insert_value = (group_id, group_name)
                 cursor.execute('''
                                 INSERT INTO
                                 GROUPS(GROUPID,PERMISSION,GROUPNAME)
-                                VALUES (?,1,?)''', insert_value)
+                                VALUES (?,1,?)
+                                ''', insert_value)
 
         # 群用户更新
         # group_member 群成员列表
