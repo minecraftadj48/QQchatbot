@@ -1,8 +1,10 @@
+from typing import Tuple
 from nonebot import on_command
-from nonebot.rule import to_me
+from nonebot.permission import MESSAGE, _message
+from nonebot import message
+from nonebot.rule import command, keyword
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
-#import asyncio
 import json
 import urllib.request
 from urllib.parse import urlencode
@@ -11,24 +13,21 @@ from urllib.parse import urlencode
 
 
 #注册一个事件响应器，事件类型为command，
-weather=on_command("获取天气",priority=10)
-
+weather=on_command("获取天气 ",priority=1)
 @weather.handle()
-
-
-async def test_handle(bot: Bot, event: Event, state: T_State):
+async def wea_test_handle(bot: Bot, event: Event, state: T_State):
     
     groupid=event.group_id
-    await bot.call_api("send_group_msg", **{"group_id": groupid, "message": "请输入城市（如“#厦门”“#武汉”）"})
-
-@weather.got("city")
-async def netdisk_out(bot: Bot, event: Event, state: T_State):
-    groupid = event.group_id
-    CITY = state["city"]
-    if event.message_type == "group":
-         url = 'https://api.iyk0.com/tq/?'
+    userid = event.user_id
+    msg = event.get_message
+    data = msg()    #command后面的玩意儿
+    #print('*******************\n')
+    #print(data)# 厦门
+    #print('*******************\n')
+    #await bot.call_api("send_group_msg", **{"group_id": groupid, "message": "请输入城市（如“#厦门”“#武汉”）"})
+    url = 'https://api.iyk0.com/tq/?'
     params = {
-        'city' : CITY,
+        'city' : data,
         'type' : ''
         }
     params = urlencode(params)
@@ -39,7 +38,6 @@ async def netdisk_out(bot: Bot, event: Event, state: T_State):
 
     a_result = json.loads(urllib.request.urlopen('%s%s' % (url,params)).read())
     if 'code' in a_result:
-        
         if a_result['code'] == 200:
             if 'wea' in a_result:
                 img_weather = ''
